@@ -27,5 +27,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:text="Automatic"
         tools:layout_editor_absoluteX="133dp" tools:layout_editor_absoluteY="195dp"/>
+    <TextView
+        android:id="@+id/textViewInterval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="TextView"
+        tools:layout_editor_absoluteX="118dp" tools:layout_editor_absoluteY="228dp"/>
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="2"
+        android:inputType="number" tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="247dp"/>
+
 
 </android.support.constraint.ConstraintLayout>

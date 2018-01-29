@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int REQUEST_ENABLE_BT = 1;
     private Button button = null;
     private CheckBox checkBox = null;
+    private EditText editText = null;
+    private TextView textViewInterval = null;
     private String timeBytesString = null;
     private long counter = 0;
 
@@ -31,13 +34,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textViewMain);
         button = findViewById(R.id.button);
-        button.setX(950);
+        button.setX(750);
         button.setY(40);
         button.setOnClickListener(this);
         checkBox = findViewById(R.id.checkBox);
-        checkBox.setX(1100);
+        checkBox.setX(900);
         checkBox.setY(50);
         checkBox.setOnClickListener(this);
+        textViewInterval = findViewById(R.id.textViewInterval);
+        textViewInterval.setX(1040);
+        textViewInterval.setY(56);
+        textViewInterval.setText("Interval");
+        editText = findViewById(R.id.editText);
+        editText.setX(1100);
+        editText.setY(40);
+        editText.setText("10");
         setBluetoothAdapter();
     }
 
@@ -75,9 +86,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.checkBox) {
             if (checkBox.isChecked()) {
                 button.setEnabled(false);
+                editText.setEnabled(false);
+                long sleepTimeInMillis = Long.parseLong(editText.getText().toString()) * 1000;
+                if (sleepTimeInMillis < 10000) {
+                    editText.setText("10");
+                }
                 new AutomaticLoopThread().start();
             } else {
                 button.setEnabled(true);
+                editText.setEnabled(true);
             }
         }
     }
@@ -87,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             while (true && checkBox.isChecked()) {
                 try {
                     new GetServerTimeThread(bluetoothAdapter, device, true).start();
-                    Thread.sleep(10000);
+                    long sleepTimeInMillis = Long.parseLong(editText.getText().toString()) * 1000;
+                    Thread.sleep(sleepTimeInMillis);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
